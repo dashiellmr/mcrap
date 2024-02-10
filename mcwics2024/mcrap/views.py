@@ -1,9 +1,8 @@
 from django.shortcuts import render
 from .forms import TextForm
-from os import environ
+import os
 import openai
-
-openai_key = environ['OPENAI_KEY']
+openai_key = os.environ.get('OPENAI_KEY')
 
 def mcrap(request):
     return render(request, 'mcrap/main.html')
@@ -22,5 +21,5 @@ def rapTransform(request):
             rap_song = response.choices[0].message['content']
             return render(request, 'mcrap/output', {'rap_song': rap_song})
     else: 
-        form = textForm()
+        form = TextForm()
     return request(request, 'mcrap/main.html', {'form': form})
