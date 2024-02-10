@@ -4,10 +4,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title> McRap </title> 
+    <link rel="stylesheet" href="{% static 'css/output.css'}">
 </head>
 <body>
     <p>Rap Song:</p>
     <pre>{{ rap_song }}</pre>
+    <div style="background-color:black;"">
+        <img src="{{ STATIC_URL }}mcraplogo.png" alt="Logo" height="75">
+    </div>
+    <br>
+    <div style="background-color:#c00625;padding:20px;">
+        <h1> Your Song </h1>
+        <p>lyrics go here</p>
+        <button type="button">Play</button>
+    </div>
+    <div style="background-color:#c00625;padding:20px;">
+        <h1> sing along </h1>
+    </div>
+
 </body>
 </html>
