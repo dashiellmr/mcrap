@@ -17,7 +17,7 @@
     </div>
     <br>
     <div class = "container" style="background-color:#92221C;padding:20px;">
-        <h1> Your Song </h1>
+        <h1> Your Rap </h1>
         {% for verse in inital_song %}
             <div>{{ verse }}</div>
         {% endfor %}
@@ -28,14 +28,15 @@
             <source src="{% static 'version3.mp3' %}" type="audio/mpeg">
             Your browser does not support the audio element.
         </audio>
-        <button onclick="playAudio()" class="button-57" role="button">
+        <button onclick="playAudio(0)" class="button-57" role="button">
             <div class="text">Play</div>
             <span>Play</span>
         </button>
-        <button class="button-57" role="button">
-            <div class="text">Pause</div>
-            <span>Pause</span>
+        <button onclick = "playAudio(1)" class="button-57" role="button">
+            <div class="text">Stop</div>
+            <span>Stop</span>
         </button>
+        <br>
         <br>
         <div id="line"></div>
     </div>
@@ -45,24 +46,42 @@
         // Manually parse the JSON-encoded rap_song data from Django
         const rapList = {{ rap_song|safe }};
 
-        function playAudio() {
+        function playAudio(cancel) {
             var audio = document.getElementById("myAudio");
             audio.loop = true;
-            audio.play();
-            displayLines();
+            if (cancel==0){
+                audio.play();
+                displayLines();
+            } if (cancel==1){
+                document.getElementById("line").innerHTML = "";
+                audio.pause();
+                audio.currentTime = 0;
+                clearInterval(incr);
+                clearInterval(print);
+            }
         }
 
         function displayLines(){
-            rapList.forEach((line, index) => {
-                setTimeout(() => { display(line); }, 3000 * index);
-            });
+
+            var index = -1;
+            incr = setInterval( () => {
+                (index += 1);
+            }, 3000)
+            
+            print = setInterval( () => {
+                display(index)
+            }, 3000);
+
+            //rapList.forEach((line, index) => {
+                //setTimeout(() => { display(line); }, 3000 * index);
+            //});
         }
 
-        function display(str){
+        function display(index){
             var msg = new SpeechSynthesisUtterance();
-            msg.text = str;
+            msg.text = rapList[index];
 
-            var wordsArray = str.split(" ");
+            var wordsArray = rapList[index].split(" ");
             var syllables = 0
             for (let i = 0; i < wordsArray.length; i++) {
                 var num = countSyllables(wordsArray[i]);
@@ -78,7 +97,7 @@
                 msg.rate = 1 - (.05 * (syllables));
             }
             window.speechSynthesis.speak(msg);
-            document.getElementById("line").innerHTML += str + "<br>";
+            document.getElementById("line").innerHTML += rapList[index] + "<br>";
         }
         function countSyllables(word) {
             // Convert the word to lowercase and remove non-alphabetic characters
