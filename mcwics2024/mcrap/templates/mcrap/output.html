@@ -4,19 +4,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> McRap </title> 
+    <title>McRap</title> 
     <link rel="stylesheet" href="{% static 'css/output.css'}">
 </head>
 <body>
-    <p>Rap Song:</p>
-    <pre>{{ rap_song }}</pre>
-    <div style="background-color:black;"">
-        <img src="{{ STATIC_URL }}mcraplogo.png" alt="Logo" height="75">
+    <div style="background-color:black;">
+        <img src="{% static 'mcraplogo.png' %}" alt="Logo" height="75">
     </div>
     <br>
     <div style="background-color:#c00625;padding:20px;">
         <h1> Your Song </h1>
-        <p>lyrics go here</p>
+        {% for verse in rap_song %}
+            <p>{{ verse }}</p>
+        {% endfor %}
         <button class="button-57" role="button" type="submit"><span class="text">Play</span><span>Play</span></button>
     </div>
     <div style="background-color:#c00625;padding:20px;">
