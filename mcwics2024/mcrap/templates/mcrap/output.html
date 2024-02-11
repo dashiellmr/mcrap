@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>McRap</title> 
-    <link rel="stylesheet" href="{% static 'css/output.css'}">
+    <link rel="stylesheet" href="{% static 'css/output.css' %}">
 </head>
 <body>
     <div style="background-color:black;">
@@ -15,13 +15,14 @@
     <div style="background-color:#c00625;padding:20px;">
         <h1> Your Song </h1>
         {% for verse in rap_song %}
-            <p>{{ verse }}</p>
+            <div>{{ verse }}</div> <!--PUT DISPLAY JAVASCRIPT HERE-->
         {% endfor %}
-        <button class="button-57" role="button" type="submit"><span class="text">Play</span><span>Play</span></button>
+        <button class="button-57" role="button" type="submit"><span class="text" onclick="playAudio()">Play</span>
+        <span>Play</span></button>
     </div>
     <div style="background-color:#c00625;padding:20px;">
         <h1> sing along </h1>
     </div>
-
+    <audio id="beat" src="{% static 'beat.mp3' %}"></audio>
 </body>
 </html>
