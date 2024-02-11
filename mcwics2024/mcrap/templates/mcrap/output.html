@@ -17,12 +17,26 @@
         {% for verse in rap_song %}
             <div>{{ verse }}</div> <!--PUT DISPLAY JAVASCRIPT HERE-->
         {% endfor %}
-        <button class="button-57" role="button" type="submit"><span class="text" onclick="playAudio()">Play</span>
+
+        <audio id="myAudio">
+            <source src="{% static 'beat.mp3' %}" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+
+        <button onclick="playAudio()" class="button-57" role="button" type="submit"><span class="text">Play</span>
         <span>Play</span></button>
     </div>
     <div style="background-color:#c00625;padding:20px;">
         <h1> sing along </h1>
     </div>
-    <audio id="beat" src="{% static 'beat.mp3' %}"></audio>
+    <br>
+
+    <script>
+        function playAudio() {
+          var audio = document.getElementById("myAudio");
+          audio.play();
+        }
+    </script>
+
 </body>
 </html>
