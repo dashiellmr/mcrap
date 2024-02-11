@@ -27,7 +27,7 @@ def rap_transform(request):
             for lyric in rap_split:
                 if "(" not in lyric and "[" not in lyric and ":" not in lyric and lyric != "":
                     clean_lyrics.append(lyric)
-            clean_lyrics = clean_lyrics[:-1]  # Assuming you want to remove the last element for some reason
+            clean_lyrics = clean_lyrics[:-3]  # Assuming you want to remove the last element for some reason
             # Update clean_lyrics_json within the if block
             clean_lyrics_json = mark_safe(json.dumps(clean_lyrics))
 
