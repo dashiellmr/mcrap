@@ -1,1 +1,2 @@
-# mcwics2024
+![McRAP](McRAP_transparent.png)
+# McRAP 
