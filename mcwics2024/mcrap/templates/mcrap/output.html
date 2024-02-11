@@ -1,4 +1,5 @@
 {% load static %}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -14,33 +15,33 @@
     <br>
     <div style="background-color:#92221C;padding:20px;">
         <h1> Your Song </h1>
-        {% for verse in rap_song %}
-            <div>{{ verse }}</div> <!--PUT DISPLAY JAVASCRIPT HERE-->
-        {% endfor %}
 
         <audio id="myAudio">
             <source src="{% static 'beat.mp3' %}" type="audio/mpeg">
             Your browser does not support the audio element.
         </audio>
-
-        <button onclick="playAudio()" class="button-57" role="button" type="submit"><span class="text">Play</span>
-        <span>Play</span></button>
+        <button onclick="playAudio()" class="button-57" role="button"><span class="text">Play</span></button>
     </div>
     <div style="background-color:#92221C;padding:20px;">
-        <h1> sing along </h1>
-        <div id = "line">
-
-        </div>
+        <h1> Sing Along </h1>
+        <div id="line"></div>
     </div>
     <br>
 
     <script>
+        // Manually parse the JSON-encoded rap_song data from Django
+        const rapList = {{ rap_song|safe }};
+
         function playAudio() {
-          var audio = document.getElementById("myAudio");
-          audio.play();
-          for (let i = 0; i < (rap_list).length; i++){
-            setTimeout( () => {display(rap_list[i])}, 3000 * i);
-          }
+            var audio = document.getElementById("myAudio");
+            audio.play();
+            displayLines();
+        }
+
+        function displayLines(){
+            rapList.forEach((line, index) => {
+                setTimeout(() => { display(line); }, 3000 * index);
+            });
         }
 
         function display(str){
@@ -49,9 +50,6 @@
             window.speechSynthesis.speak(msg);
             document.getElementById("line").innerHTML += str + "<br>";
         }
-
-        
     </script>
-
 </body>
 </html>
