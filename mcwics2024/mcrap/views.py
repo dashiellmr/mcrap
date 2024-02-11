@@ -1,35 +1,34 @@
 from django.shortcuts import render
 from .forms import TextForm
-import os
-import vertexai as vai
-from vertexai.language_models import TextGenerationModel
-openai_key = os.getenv('GEMINI_KEY')
+import cohere
+from gtts import gTTS
+from pydub import AudioSegment
+from pydub.playback import play
 
+
+client = cohere.Client('xiRQw9XMonQhgxXa3x2WLAfuG7tdQwBAerIEPiUz')
 def mcrap(request):
     return render(request, 'mcrap/main.html')
 
-def rapTransform(request):
+def rap_transform(request):
     if request.method == "POST":
-        form = TextForm(request.POST)
-        if form.is_valid():
-            text = form.cleaned_data['text']
-            rap_song = createRap(256, 'mcwics2024', 'us-central1', text)
-            return render(request, 'mcrap/output', {'rap_song': rap_song})
-    else: 
-        form = TextForm()
-    return request(request, 'mcrap/main.html', {'form': form})
+        rap_song_input = request.POST.get('rap_song')
+        if rap_song_input:
+            rap_song = createRap(rap_song_input)  
+            tts = gTTS(f"{rap_song}")
+            tts.save("rap.mp3")
+            return render(request, 'mcrap/output.html', {'rap_song': rap_song}) 
+    return render(request, 'mcrap/main.html')
 
-def createRap(temperature, project_id, location, input):
-    vai.init(project_id, location)
-    params = {
-        "temperature": temperature,
-        "max_output_tokens": 1024,
-        "top_p": 0.8,
-        "top_k": 40,
-    }
-    model = TextGenerationModel.from_pretrained("text-bison@001")
-    response = model.predict(f"Imagine you're the greatest rap lyricist in the world, 
-                             create a rap song based on this text: {input}.",
-                               **params)   
-    print(f"Response from model: {response.text}")
-    return response.text
+
+def createRap(text):
+    response = client.generate(
+        prompt=f'''Imagine youre the greatest rap lyricist of all time -- write a rap about these notes but make it help with 
+        comprehension, please dont add any additional text except the lyrics of the song, also prioritze rhyming over everything: {text}''',
+    )
+    return response.generations[0].text
+
+def increaseSpeed(song, target_speed=1.5):
+    speech = AudioSegment.from_mp3("rap.mp3")
+    new_speed = speech.speedup(playback_speed=target_speed)
+    new_speed.export("modified_speech.mp3", format="mp3")

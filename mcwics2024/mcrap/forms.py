@@ -1,4 +1,4 @@
 from django import forms
 
 class TextForm(forms.Form):
-    text = forms.CharField(widget=forms.Textarea, label='Enter your text')
+    text = forms.CharField(label='Enter your notes', max_length=256)

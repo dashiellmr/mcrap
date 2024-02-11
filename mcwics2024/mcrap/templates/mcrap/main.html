@@ -9,16 +9,12 @@
 </head>
 <body>
     <div class="form-container">
-        <img src="{{ STATIC_URL }}mcraplogo.png" alt="Logo" width="531" height="132">
-        <br>
-        <br>
-        <br>
-        <form method="post">
+        <img src="{% static 'mcraplogo.png' %}" alt="Logo" width="531" height="132">
+        <form method="post" action="{% url 'mcrap:rap_transform' %}">
             {% csrf_token %}
-            <!--{{ form.as_p }}-->
-            <textarea id="freeform" name="freeform" rows="20" cols="70" placeholder="Type your notes here..."></textarea>
-            <br><br>
-            <button class="button-57" role="button" type="submit"><span class="text">Generate Rap</span><span>Generate Rap</span></button>
+            <label for="rap_song">Your notes: </label>
+            <textarea id="rap_song" name="rap_song" rows="4" cols="50"></textarea>
+            <input type="submit" value="Generate Rap">
         </form>
     </div>
 </body>
