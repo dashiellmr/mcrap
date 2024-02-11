@@ -3,6 +3,17 @@ body {
     color: white;
 } 
 
+.container {
+  display: inline-table;
+  height: 1000px;
+  width: 50%;
+  padding: 15px;
+  float: left;
+  align-items: center;
+  box-sizing: border-box;
+  text-align: center;
+}
+
 /* CSS */
 .button-57 {
   position: relative;
