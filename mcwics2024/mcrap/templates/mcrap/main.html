@@ -18,10 +18,10 @@
             {% csrf_token %}
             <textarea id="rap_song" name="rap_song" rows="20" cols="70" placeholder="Type your notes here..."></textarea>
             <br><br>
-            <button class="button-57" role="button" type="submit">
+            <button class="button-57" role="button" onclick="showLoading(this)" type="submit">
                 <div class="text">Generate Rap</div>
                 <span>Generate Rap</span>
-            </button>
+            </button>        
         </form>
     </div>
 </body>
