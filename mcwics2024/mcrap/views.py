@@ -15,14 +15,13 @@ def rap_transform(request):
         rap_song_input = request.POST.get('rap_song')
         if rap_song_input:
             rap_song = createRap(rap_song_input)  
-            tts = gTTS(f"{rap_song}")
-            tts.save("rap.mp3")
             rap_split = rap_song.split('\n')
             clean_lyrics = []
             for lyric in rap_split:
                 if "(" not in lyric and "[" not in lyric and ":" not in lyric:
                     clean_lyrics.append(lyric)
             clean_lyrics = clean_lyrics[:-1]
+            
             return render(request, 'mcrap/output.html', {'rap_song': clean_lyrics}) 
     return render(request, 'mcrap/main.html')
 
