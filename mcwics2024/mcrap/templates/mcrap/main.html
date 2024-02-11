@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <title>Home</title>
 </head>
 <body>
@@ -17,7 +18,10 @@
             {% csrf_token %}
             <textarea id="rap_song" name="rap_song" rows="20" cols="70" placeholder="Type your notes here..."></textarea>
             <br><br>
-            <button class="button-57" role="button" type="submit"><span class="text">Generate Rap</span><span>Generate Rap</span></button>
+            <button class="button-57" role="button" type="submit">
+                <div class="text">Generate Rap</div>
+                <span>Generate Rap</span>
+            </button>
         </form>
     </div>
 </body>
