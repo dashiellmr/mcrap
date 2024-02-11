@@ -7,6 +7,7 @@ from pydub import AudioSegment
 from pydub.playback import play
 from django.utils.safestring import mark_safe
 import json
+import re
 
 
 client = cohere.Client('xiRQw9XMonQhgxXa3x2WLAfuG7tdQwBAerIEPiUz')
@@ -22,14 +23,16 @@ def rap_transform(request):
         if rap_song_input:
             rap_song = createRap(rap_song_input)
             rap_split = rap_song.split('\n')
-            clean_lyrics = [lyric for lyric in rap_split if "(" not in lyric and "[" not in lyric and ":" not in lyric]
+            clean_lyrics = []
+            for lyric in rap_split:
+                if "(" not in lyric and "[" not in lyric and ":" not in lyric and lyric != "":
+                    clean_lyrics.append(lyric)
             clean_lyrics = clean_lyrics[:-1]  # Assuming you want to remove the last element for some reason
-
             # Update clean_lyrics_json within the if block
             clean_lyrics_json = mark_safe(json.dumps(clean_lyrics))
 
     # Ensure clean_lyrics_json is passed in the context regardless of the POST condition
-    return render(request, 'mcrap/output.html', {'rap_song': clean_lyrics_json})
+    return render(request, 'mcrap/output.html', {'rap_song': clean_lyrics_json, 'inital_song': clean_lyrics})
 
 
 def createRap(text):
